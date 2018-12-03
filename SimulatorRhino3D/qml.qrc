@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Base.qml</file>
+        <file>Flipper.qml</file>
+        <file>BasicCamera.qml</file>
+        <file>RhinoEffect.qml</file>
+        <file>RhinoMaterial.qml</file>
+        <file>shaders/robustwireframe.frag</file>
+        <file>shaders/robustwireframe.geom</file>
+        <file>shaders/robustwireframe.vert</file>
+        <file>Turntable.qml</file>
+        <file>Sholder.qml</file>
+        <file>Elbow.qml</file>
+        <file>Wrist.qml</file>
+        <file>Roda.qml</file>
+    </qresource>
+    <qresource prefix="/obj">
+        <file>obj/base.obj</file>
+        <file>obj/flipper.obj</file>
+        <file>obj/roda.obj</file>
+        <file>obj/turntable.obj</file>
+        <file>obj/untitled.obj</file>
+        <file>obj/ball.obj</file>
+        <file>obj/sholder.obj</file>
+        <file>obj/elbow.obj</file>
+        <file>obj/wrist.obj</file>
+    </qresource>
+</RCC>
