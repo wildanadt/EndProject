@@ -66,7 +66,7 @@ Effect {
             graphicsApiFilter {
                 api: GraphicsApiFilter.OpenGL
                 profile: GraphicsApiFilter.CoreProfile
-                majorVersion: 4
+                majorVersion: 3
                 minorVersion: 1
             }
 

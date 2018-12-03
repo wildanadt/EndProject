@@ -82,8 +82,8 @@ vec4 shadeLine( const in vec4 color )
     }
 
     // Blend between line color and phong color
-    float mixVal;
-  /*  if ( d < line.width - 1.0 )
+    float mixVal = 0;
+   /* if ( d < line.width - 1.0 )
     {
         mixVal = 1.0;
     }
@@ -96,9 +96,10 @@ vec4 shadeLine( const in vec4 color )
         float x = d - ( line.width - 1.0 );
         mixVal = exp2( -2.0 * ( x * x ) );
     }
-*/
+    */
     return mix( color, line.color, mixVal );
 }
+
 
 void main()
 {
