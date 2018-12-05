@@ -1,1 +1,7 @@
-/Qt 
+/Qt
+build-SimulatorRhino3D-Desktop_Qt_5_11_2_GCC_64bit-Debug/
+build-UdpTransAndroid-Android_for_armeabi_v7a_GCC_4_9_Qt_5_11_2_for_Android_ARMv7-Debug/
+build-UdpTransAndroid-Desktop_Qt_5_11_2_GCC_64bit-Debug/
+*.directory
+SimulatorRhino3D/SimulatorRhino3D.pro.user.c19ee3c
+SimulatorRhino3D/SimulatorRhino3D.pro.user

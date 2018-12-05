@@ -28,7 +28,7 @@ Entity {
     QQ.Trans {
         id: transform
         translation: Qt.vector3d(root.x, root.y, root.z)
-        rotation: fromEulerAngles(theta, phi, Serial.data )
+        rotation: fromEulerAngles(theta, phi, 0 )
         scale: root.scale
 
 

@@ -1,4 +1,4 @@
-QT += serialport widgets quickwidgets 3dquickextras 3dcore 3drender 3dinput 3dlogic 3dextras qml quick 3dquick 3danimation
+QT +=  quickwidgets 3dquickextras 3dcore 3drender 3dinput 3dlogic 3dextras qml quick 3dquick 3danimation network serialport widgets
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -15,13 +15,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     serial.cpp \
-    linker.cpp
+    linker.cpp \
+    udpclient.cpp
 
 RESOURCES += qml.qrc
 
 QT += 3dextras
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH = /home/wildanadt/Qt/5.11.2/gcc_64/qml
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -39,4 +40,5 @@ DISTFILES += \
 
 HEADERS += \
     serial.h \
-    linker.h
+    linker.h \
+    udpclient.h

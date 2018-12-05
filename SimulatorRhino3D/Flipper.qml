@@ -10,6 +10,7 @@ import QtQuick.Scene3D 2.0
 
 import io.qt.transform.trans 1.0 as QQ
 import Serial 1.0
+import UdpClient 1.0
 
 
 Entity {
@@ -29,7 +30,7 @@ Entity {
         id: transform
 
         translation: Qt.vector3d(root.x,root.y,root.z)
-        rotation: fromEulerAngles(0, 0, 180)
+        rotation: fromEulerAngles(0, 0, 180 + UdpClient.dataFlipper)
         scale: root.scale
 
     }

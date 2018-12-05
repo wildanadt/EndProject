@@ -16,7 +16,7 @@ Material {
     parameters: [
         Parameter { name: "ka"; value: Qt.vector3d(root.ambient.r, root.ambient.g, root.ambient.b) },
         Parameter { name: "kd"; value: Qt.vector3d(root.diffuse.r, root.diffuse.g, root.diffuse.b) },
-        Parameter { name: "ksp"; value: Qt.vector3d(root.specular.r, root.specular.g, root.specular.b) },
+        Parameter { name: "ks"; value: Qt.vector3d(root.specular.r, root.specular.g, root.specular.b) },
         Parameter { name: "shininess"; value: root.shininess },
         Parameter { name: "line.width"; value: root.lineWidth },
         Parameter { name: "line.color"; value: root.lineColor }

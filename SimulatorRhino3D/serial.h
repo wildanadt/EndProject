@@ -15,10 +15,6 @@ class Serial :  public QSerialPort
 
 public:
 
-    struct Nilai{
-        qreal m_turntable;
-        qreal m_sholder;
-    };
     qreal data(){return m_turntable;}
     static Serial *getGetInstance();
 

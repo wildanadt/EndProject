@@ -55,6 +55,8 @@ import Qt3D.Input 2.0
 import Qt3D.Extras 2.0
 import io.qt.transform.trans 1.0
 
+import UdpClient 1.0
+
 
 Entity {
     id: root
@@ -79,6 +81,7 @@ Entity {
 
     OrbitCameraController{
         camera: mainCamera
+
     }
 
     FirstPersonCameraController { camera: mainCamera }
@@ -89,28 +92,28 @@ Entity {
         ambient: Qt.rgba( 0.2, 0.0, 0.0, 1.0 )
         diffuse: Qt.rgba( 0.8, 0.0, 0.0, 1.0 )
 
-        QQ2.SequentialAnimation {
-            loops: QQ2.Animation.Infinite
-            running: true
+//        QQ2.SequentialAnimation {
+//            loops: QQ2.Animation.Infinite
+//            running: true
 
-            QQ2.NumberAnimation {
-                target: wireframeMaterial;
-                property: "lineWidth";
-                duration: 1000;
-                from: 0.8
-                to: 1.8
-            }
+//            QQ2.NumberAnimation {
+//                target: wireframeMaterial;
+//                property: "lineWidth";
+//                duration: 1000;
+//                from: 0.8
+//                to: 1.8
+//            }
 
-            QQ2.NumberAnimation {
-                target: wireframeMaterial;
-                property: "lineWidth";
-                duration: 1000;
-                from: 1.8
-                to: 0.8
-            }
+//            QQ2.NumberAnimation {
+//                target: wireframeMaterial;
+//                property: "lineWidth";
+//                duration: 1000;
+//                from: 1.8
+//                to: 0.8
+//            }
 
-            QQ2.PauseAnimation { duration: 1500 }
-        }
+//            QQ2.PauseAnimation { duration: 1500 }
+//        }
     }
 
     Base {
