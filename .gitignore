@@ -5,3 +5,4 @@ build-UdpTransAndroid-Desktop_Qt_5_11_2_GCC_64bit-Debug/
 *.directory
 SimulatorRhino3D/SimulatorRhino3D.pro.user.c19ee3c
 SimulatorRhino3D/SimulatorRhino3D.pro.user
+UdpTransAndroid/UdpTransAndroid.pro.user
