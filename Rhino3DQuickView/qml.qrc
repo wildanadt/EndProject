@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ObjectRhino.qml</file>
+    </qresource>
+    <qresource prefix="/obj">
+        <file>obj/ball.obj</file>
+        <file>obj/base.obj</file>
+        <file>obj/elbow.obj</file>
+        <file>obj/flipper.obj</file>
+        <file>obj/roda.obj</file>
+        <file>obj/sholder.obj</file>
+        <file>obj/turntable.obj</file>
+        <file>obj/untitled.obj</file>
+        <file>obj/wrist.obj</file>
+    </qresource>
+    <qresource prefix="/image">
+        <file>img/kompas_background.png</file>
+        <file>img/kompas_pointer.png</file>
+        <file>battery/batt1.png</file>
+        <file>battery/batt2.png</file>
+        <file>battery/batt3.png</file>
+        <file>battery/batt4.png</file>
+    </qresource>
+</RCC>

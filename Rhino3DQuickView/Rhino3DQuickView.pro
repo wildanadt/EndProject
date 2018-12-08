@@ -1,4 +1,4 @@
-QT +=  quickwidgets 3dquickextras 3dcore 3drender 3dinput 3dlogic 3dextras qml quick 3dquick 3danimation network serialport widgets
+QT += quick qml 3dinput widgets network
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -14,12 +14,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    serial.cpp \
     udpclient.cpp
 
 RESOURCES += qml.qrc
 
-QT += 3dextras
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH = /home/wildanadt/Qt/5.11.2/gcc_64/qml
 
@@ -31,12 +29,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    ../../Model3D_Robot/modifed/base.obj \
-    ../../Model3D_Robot/modifed/flipper.obj \
-    ../../Model3D_Robot/modifed/roda.obj \
-    ../../Model3D_Robot/modifed/turntable.obj
-
 HEADERS += \
-    serial.h \
     udpclient.h

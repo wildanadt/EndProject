@@ -21,6 +21,9 @@ UdpServer::~UdpServer()
 }
 
 void UdpServer::sendData(){
+    QDataStream out(&datagram, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_11);
+    out<<vFlipper<<vTurntable<<vSholder<<vElbow<<vWrist<<vBattery<<vCompass;
     udpSocket->writeDatagram(datagram, QHostAddress::Broadcast,45454);
 
     pesan++;
@@ -28,88 +31,66 @@ void UdpServer::sendData(){
     qDebug()<<"Data ke: "<<pesan;
 }
 
-
 void UdpServer::on_Turntable1_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("TT++");
-
+    vTurntable++;
     sendData();
 }
 
 void UdpServer::on_Turntable2_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("TT--");
-
+    vTurntable--;
     sendData();
 }
 
 void UdpServer::on_Sholder1_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("SH++");
-
+    vSholder++;
     sendData();
-
 }
 
 void UdpServer::on_Sholder2_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("SH--");
-
+    vSholder--;
     sendData();
-
 }
 
 void UdpServer::on_Elbow1_pressed(){
-        QDataStream out(&datagram, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_5_11);
-        out<<QString("EL++");
-
-        sendData();
-
+    vElbow++;
+    sendData();
 }
 
 void UdpServer::on_Elbow2_pressed(){
-        QDataStream out(&datagram, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_5_11);
-        out<<QString("EL--");
-
-        sendData();
+    vElbow--;
+    sendData();
 }
 
 void UdpServer::on_Wrist1_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("WR++");
-
+    vWrist++;
     sendData();
-
 }
 
 void UdpServer::on_Wrist2_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("WR--");
-
+    vWrist--;
     sendData();
 }
 
 void UdpServer::on_Flipper1_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("FL++");
-
+    vFlipper++;
     sendData();
-
 }
 
 void UdpServer::on_Flipper2_pressed(){
-    QDataStream out(&datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
-    out<<QString("FL--");
-
+    vFlipper--;
     sendData();
+}
+
+void UdpServer::on_dial_valueChanged(int value)
+{
+    vCompass = value;
+    sendData();
+    qDebug()<<"Compass: "<<value;
+}
+
+void UdpServer::on_horizontalSlider_valueChanged(int value)
+{
+    vBattery = value;
+    sendData();
+    qDebug()<<"Battery: "<<value;
 }

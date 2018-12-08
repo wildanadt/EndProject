@@ -16,7 +16,7 @@ import UdpClient 1.0
 Entity {
     id: root
 
-    property real x: .0
+    property real x: 0.0
     property real y: 0.0
     property real z: 0.0
     property real scale: 1.0

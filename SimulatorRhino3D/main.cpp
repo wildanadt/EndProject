@@ -24,6 +24,9 @@ int main(int argc, char* argv[])
     QGuiApplication app(argc, argv);
     Qt3DExtras::Quick::Qt3DQuickWindow view;
 
+    //QQuickView view;
+
+
    // QQuickView view;
     //view.resize(800,600);
     //view.setResizeMode(QQuickView::SizeRootObjectToView);
@@ -31,7 +34,6 @@ int main(int argc, char* argv[])
     UdpClient *configUdp = UdpClient::getInstance();
 
     qmlRegisterType<Qt3DCore::QTransform>("io.qt.transform.trans",1,0,"Trans");
-    //qmlRegisterType<Serial>("io.qt.serial",1, 0, "Serial");
     qmlRegisterSingletonType<Serial>("Serial", 1, 0, "Serial", singletonTypeProvider);
     qmlRegisterSingletonType<UdpClient>("UdpClient", 1, 0, "UdpClient", singletonUdp);
 
@@ -41,7 +43,9 @@ int main(int argc, char* argv[])
     //object.engine()->qmlEngine()->rootContext()->setContextProperty("_window", &view);
     // Expose the window as a context property so we can set the aspect ratio
     view.engine()->qmlEngine()->rootContext()->setContextProperty("_window", &view);
+   // view.rootContext()->setContextProperty("_window", &view);
     //view.rootContext()->setContextProperty("_window", &view);
+
 
     view.setSource(QUrl("qrc:/main.qml"));
     view.show();

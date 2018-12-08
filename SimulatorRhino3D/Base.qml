@@ -22,7 +22,8 @@ Entity {
     property real phi: 0.0
     property Material material
 
-    components: [ transform, mesh, root.material ]
+    //components: [ transform, mesh, root.material ]
+    components: [transform, mesh, root.material]
 
     QQ.Trans {
         id: transform

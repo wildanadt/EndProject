@@ -55,6 +55,11 @@ import Qt3D.Input 2.0
 import Qt3D.Extras 2.0
 import io.qt.transform.trans 1.0
 
+import QtQuick 2.0
+import QtQuick.Scene2D 2.9
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.2
+
 import UdpClient 1.0
 
 
@@ -76,7 +81,7 @@ Entity {
 
     BasicCamera {
         id: mainCamera
-        position: Qt.vector3d( 0.0, 0.0, 30.0 )
+        position: Qt.vector3d( 0.0, 0.0, 20.0 )
     }
 
     OrbitCameraController{
@@ -90,7 +95,7 @@ Entity {
         id: wireframeMaterial
         effect: RhinoEffect {}
         ambient: Qt.rgba( 0.2, 0.0, 0.0, 1.0 )
-        diffuse: Qt.rgba( 0.8, 0.0, 0.0, 1.0 )
+        diffuse: Qt.rgba( 51/255, 102/255, 0, 1.0 )
 
 //        QQ2.SequentialAnimation {
 //            loops: QQ2.Animation.Infinite
@@ -120,6 +125,8 @@ Entity {
         id: trefoilKnot
         material: wireframeMaterial
     }
+
+
 
 
 }

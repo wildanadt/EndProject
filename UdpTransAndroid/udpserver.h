@@ -36,6 +36,10 @@ private slots:
 
     void on_Flipper2_pressed();
 
+    void on_dial_valueChanged(int value);
+
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
     QByteArray datagram;
     QDataStream out;
@@ -43,7 +47,7 @@ private:
     void sendData();
     QUdpSocket *udpSocket = nullptr;
     qreal pesan = 0;
-    qreal vTurntable, vSholder, vElbow, vWrist, vFlipper = 0;
+    qreal vTurntable, vSholder, vElbow, vWrist, vFlipper, vBattery, vCompass = 0;
 };
 
 #endif // UDPSERVER_H

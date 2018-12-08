@@ -5,7 +5,7 @@ Camera {
     id: mainCamera
     projectionType: CameraLens.PerspectiveProjection
     fieldOfView: 22.5
-    aspectRatio: _window.width / _window.height
+   // aspectRatio: _window.width / _window.height
     nearPlane:   0.01
     farPlane:    1000.0
     viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )

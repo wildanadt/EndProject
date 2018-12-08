@@ -7,7 +7,7 @@ Material {
     id: root
 
     property color ambient: Qt.rgba( 0.05, 0.05, 0.05, 1.0 )
-    property color diffuse: Qt.rgba( 0.7, 0.7, 0.7, 1.0 )
+    property color diffuse: Qt.rgba( 51/255, 102/255, 0, 1.0 )
     property color specular: Qt.rgba( 0.95, 0.95, 0.95, 1.0 )
     property real shininess: 150.0
     property real lineWidth: 0.8
