@@ -1,5 +1,4 @@
 #include "udpclient.h"
-
 #include <QtDebug>
 
 UdpClient* UdpClient::instances = nullptr;
@@ -7,7 +6,8 @@ UdpClient* UdpClient::instances = nullptr;
 UdpClient::UdpClient(QObject *parent):
     QUdpSocket(parent)
 {
-    UdpClient::bind(45454, QUdpSocket::ShareAddress);
+    socket = new QUdpSocket(this);
+    socket->bind(45454, QUdpSocket::ShareAddress);
 }
 
 UdpClient *UdpClient::getInstance(){
@@ -47,9 +47,9 @@ qreal UdpClient::dataBattery()
 
 void UdpClient::processPendingDatagrams()
 {
-    while (UdpClient::hasPendingDatagrams()) {
-        datagram.resize(int(UdpClient::pendingDatagramSize()));
-        UdpClient::readDatagram(datagram.data(), datagram.size());
+    while (socket->hasPendingDatagrams()) {
+        datagram.resize(int(socket->pendingDatagramSize()));
+        socket->readDatagram(datagram.data(), datagram.size());
 
     }
         QDataStream in(&datagram, QIODevice::ReadOnly);
@@ -66,9 +66,12 @@ void UdpClient::processPendingDatagrams()
                     vElbow=EL;
                     vWrist=WR;
                     vFlipper=FL;
+                    ++data1Count;
                 }
+
             }
             //qDebug()<<"data1"<<vTurntable<<" "<<vSholder<<" "<<vSholder<<" "<<vElbow<<" "<<vWrist<<" "<<vFlipper;
+
         }
         else if (static_cast<char>(head1)=='R' && static_cast<char>(head2)=='H' && dataType==true) {
             if(dataSize==2){
@@ -77,16 +80,17 @@ void UdpClient::processPendingDatagrams()
                 if(XOR==vcheckSum2){
                     vBattery=BAT;
                     vCompass=COM;
+                    ++data2Count;
                 }
             }
                     //qDebug()<<"data2"<<vBattery<<" "<<vCompass;
         }
 
-        else {
-            return;
-        }
+       ++allDataCount;
 
-    emit signal();
-    hitungan++;
     //qDebug()<<"Data ke: "<<hitungan<<", "<<datagram.size();
+        qDebug()<<"Update paket data 1 = "<<data1Count;
+        qDebug()<<"Update paket data 2 diterima = "<<data2Count;
+        qDebug()<<"Total update paket data ="<<allDataCount<<"\n";
+        emit signal();
 }

@@ -18,7 +18,7 @@ Entity {
 
     Mesh {
         id: meshbase
-        source: "qrc:/obj/base.obj"
+        source: "qrc:/file_obj/obj/base.obj"
     }
 
     Transform {
@@ -36,7 +36,7 @@ Entity {
         enabled: true
         Mesh {
             id: meshflipper
-            source: "qrc:/obj/flipper.obj"
+            source: "qrc:/file_obj/obj/flipper.obj"
         }
 
         Transform {
@@ -55,7 +55,7 @@ Entity {
         id: wheel
         Mesh {
             id: meshwheel
-            source: "qrc:/obj/roda.obj"
+            source: "qrc:/file_obj/obj/roda.obj"
         }
 
         Transform {
@@ -74,7 +74,7 @@ Entity {
         id: turntable
         Mesh {
             id: meshturntable
-            source: "qrc:/obj/turntable.obj"
+            source: "qrc:/file_obj/obj/turntable.obj"
         }
 
         Transform {
@@ -91,7 +91,7 @@ Entity {
             id: sholder
             Mesh {
                 id: meshsholder
-                source: "qrc:/obj/sholder.obj"
+                source: "qrc:/file_obj/obj/sholder.obj"
             }
 
             Transform {
@@ -108,7 +108,7 @@ Entity {
                 id: elbow
                 Mesh {
                     id: meshelbow
-                    source: "qrc:/obj/elbow.obj"
+                    source: "qrc:/file_obj/obj/elbow.obj"
                 }
 
                 Transform {
@@ -125,7 +125,7 @@ Entity {
                     id: wrist
                     Mesh {
                         id: meshwrist
-                        source: "qrc:/obj/wrist.obj"
+                        source: "qrc:/file_obj/obj/wrist.obj"
                     }
 
                     Transform {

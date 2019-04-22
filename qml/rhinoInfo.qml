@@ -8,8 +8,9 @@ import Scale 1.0
 
     Rectangle {
          id: rectRhinoInfo
-         width: Scaling.hscale(512)
-         height: Scaling.vscale(240)
+        // width: Scaling.hscale(512)
+        // height: Scaling.vscale(240)
+
 //         height: 240
 //         width: 512
         color: Qt.rgba(0.12, 0.11, 0.21, 1)

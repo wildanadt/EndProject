@@ -1,12 +1,14 @@
 import QtQuick 2.0
 import QtQml 2.3
 import QtQuick.Controls 2.4
+import QtQuick.Controls 1.4 as QQC1
 import QtQuick.Scene3D 2.0
 import QtGraphicalEffects 1.0
 import QtGraphicalEffects 1.0 as QQ
 import QtQuick.Window 2.11
 import QtQuick.Window 2.2
 import QtQuick.Controls.Universal 2.2
+import QtQuick.Controls.Styles 1.4
 
 import Qt3D.Core 2.9
 import Qt3D.Render 2.9
@@ -30,24 +32,24 @@ Page{
     width: Scaling.screenWidth
     //        height: 1080
     //        width: 1920
-    Timer {
-        interval: 2000
-        repeat: true
-        running: true
-        triggeredOnStart: true
-        onTriggered: {
-            //console.log(Scaling.rectLeftMargin)
-            //console.log(Scaling.vscale(321))
-            console.log(mainPage.width)
-            console.log(Screen.devicePixelRatio)
-            console.log(Screen.height)
-            //console.log(Scaling.hscale(60))
-            // console.log(rect.anchors.topMargin)
-            //            console.log(rect.anchors.leftMargin)
+    //    Timer {
+    //        interval: 2000
+    //        repeat: true
+    //        running: true
+    //        triggeredOnStart: true
+    //        onTriggered: {
+    //            //console.log(Scaling.rectLeftMargin)
+    //            //console.log(Scaling.vscale(321))
+    //            console.log(mainPage.width)
+    //            console.log(Screen.devicePixelRatio)
+    //            console.log(Screen.height)
+    //            //console.log(Scaling.hscale(60))
+    //            // console.log(rect.anchors.topMargin)
+    //            //            console.log(rect.anchors.leftMargin)
 
 
-        }
-    }
+    //        }
+    //    }
 
     background: Rectangle{
         anchors.fill: parent
@@ -68,7 +70,7 @@ Page{
 
     FontLoader{
         id:myfont
-        source: "qrc:/font/Font Awesome 5 Free-Solid-900.otf"
+        source: "qrc:/font/font/Font Awesome 5 Free-Solid-900.otf"
     }
     //    FontLoader{
     //        id:myfontRegular
@@ -137,20 +139,22 @@ Page{
 
             Loader{
                 id: loadRhinoInfo
-                source: "qrc:/qml/rhinoInfo.qml"
-                width: Scaling.hscale(512)
-                height: Scaling.vscale(240)
+                source: "qrc:/qml/qml/rhinoInfo.qml"
+                width: rect.width * 1/2
+                //height: Scaling.vscale(240)
                 anchors.left: rect.left
                 anchors.leftMargin: 0
-                visible: flag
+                visible: true
                 anchors.top: rect.bottom
-                anchors.topMargin: Scaling.vscale(35)
+                anchors.topMargin: Scaling.vscale(25)
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Scaling.vscale(40)
             }
 
             Rectangle {
                 id: rect
                 height: parent.height/2 + Scaling.vscale(100)
-                width: parent.width *2/3
+                width: parent.width * 7.6/12
                 radius: 5
                 border.width: 2
                 //anchors.right: parent.right
@@ -162,14 +166,6 @@ Page{
                 color: "white"
                 border.color: Qt.rgba(0.15, 0.12, 0.22, 1)
                 layer.effect: shadow
-                //                layer.effect: DropShadow {
-                //                    color: "#000000"
-                //                    radius: 20
-                //                    samples: 25
-                //                    verticalOffset: 5
-                //                    transparentBorder: true
-                //                    horizontalOffset: -5
-                //                }
                 visible: true
                 // antialiasing: true
                 layer.enabled: true
@@ -184,7 +180,6 @@ Page{
                     anchors.rightMargin: Scaling.hscale(-1)
                     // antialiasing: true
                     anchors.left: parent.left
-                    active: true
                 }
                 Text {
                     id: rhinoicon
@@ -199,6 +194,7 @@ Page{
                     font.family: myfont.name
                     anchors.left: rhinoLabel.left
                     font.pointSize: Scaling.tscale(18)
+                    fontSizeMode: Text.Fit
                 }
 
                 Text {
@@ -214,6 +210,8 @@ Page{
                     font.family: "Courier"
                     font.pointSize: Scaling.tscale(18)
                     font.bold: true
+                    fontSizeMode: Text.Fit
+
                 }
 
                 Scene3D {
@@ -260,84 +258,84 @@ Page{
                     }
 
 
-                        //                        Entity {
-                        //                            components: [
-                        //                                PointLight {
-                        //                                    enabled: parent.enabled
-                        //                                    color: "black"
-                        //                                    intensity: 0
-                        //                                },
-                        //                                EnvironmentLight {
-                        //                                    enabled: parent.enabled
+                    //                        Entity {
+                    //                            components: [
+                    //                                PointLight {
+                    //                                    enabled: parent.enabled
+                    //                                    color: "black"
+                    //                                    intensity: 0
+                    //                                },
+                    //                                EnvironmentLight {
+                    //                                    enabled: parent.enabled
 
-                        //                                    irradiance: TextureLoader {
-                        //                                        source: "qrc:/cubemaps/cubemaps/default_irradiance.dds"
-                        //                                        wrapMode {
-                        //                                            x: WrapMode.ClampToEdge
-                        //                                            y: WrapMode.ClampToEdge
-                        //                                        }
-                        //                                        generateMipMaps: false
-                        //                                    }
-                        //                                    specular: TextureLoader {
-                        //                                        source: "qrc:/cubemaps/cubemaps/default_specular.dds"
-                        //                                        wrapMode {
-                        //                                            x: WrapMode.ClampToEdge
-                        //                                            y: WrapMode.ClampToEdge
-                        //                                        }
-                        //                                        generateMipMaps: false
-                        //                                    }
-                        //                                }
-                        //                            ]
-                        //                        }
+                    //                                    irradiance: TextureLoader {
+                    //                                        source: "qrc:/cubemaps/cubemaps/default_irradiance.dds"
+                    //                                        wrapMode {
+                    //                                            x: WrapMode.ClampToEdge
+                    //                                            y: WrapMode.ClampToEdge
+                    //                                        }
+                    //                                        generateMipMaps: false
+                    //                                    }
+                    //                                    specular: TextureLoader {
+                    //                                        source: "qrc:/cubemaps/cubemaps/default_specular.dds"
+                    //                                        wrapMode {
+                    //                                            x: WrapMode.ClampToEdge
+                    //                                            y: WrapMode.ClampToEdge
+                    //                                        }
+                    //                                        generateMipMaps: false
+                    //                                    }
+                    //                                }
+                    //                            ]
+                    //                        }
 
-                        //                        Entity {
-                        //                            id: floor
+                    //                        Entity {
+                    //                            id: floor
 
-                        //                            components: [
-                        //                                Mesh {
-                        //                                    source: "qrc:/obj/obj/plane-10x10.obj"
-                        //                                },
-                        //                                TexturedMetalRoughMaterial {
-                        //                                    baseColor: TextureLoader {
-                        //                                        source: "qrc:/img/img/ceramic_small_diamond_roughness.png"
-                        //                                        format: Texture.SRGB8_Alpha8
-                        //                                        generateMipMaps: true
-                        //                                    }
-                        //                                     metalness: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_metallic.png"; generateMipMaps: true }
-                        //                                     roughness: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_roughness.png"; generateMipMaps: true }
-                        //                                    normal: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_normal.png"; generateMipMaps: true }
-                        //                                     ambientOcclusion: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_ambient_occlusion.png" }
-                        //                                }
-                        //                            ]
-                        //                        }
+                    //                            components: [
+                    //                                Mesh {
+                    //                                    source: "qrc:/obj/obj/plane-10x10.obj"
+                    //                                },
+                    //                                TexturedMetalRoughMaterial {
+                    //                                    baseColor: TextureLoader {
+                    //                                        source: "qrc:/img/img/ceramic_small_diamond_roughness.png"
+                    //                                        format: Texture.SRGB8_Alpha8
+                    //                                        generateMipMaps: true
+                    //                                    }
+                    //                                     metalness: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_metallic.png"; generateMipMaps: true }
+                    //                                     roughness: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_roughness.png"; generateMipMaps: true }
+                    //                                    normal: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_normal.png"; generateMipMaps: true }
+                    //                                     ambientOcclusion: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_ambient_occlusion.png" }
+                    //                                }
+                    //                            ]
+                    //                        }
 
 
 
                 }
 
 
-                Button {
-                    id: button
-                    width: 32
-                    height: 32
-                    text: "!"
-                    anchors.top: scene3d.top
-                    anchors.leftMargin: 5
-                    anchors.topMargin: 5
-                    anchors.left: scene3d.left
-                    font.pixelSize: Qt.application.font.pixelSize * 1.5
-                    highlighted: true
-                    Universal.accent: Universal.Olive
-                    Universal.foreground: Universal.Crimson
-                    onClicked: flags()
-                }
+                //                Button {
+                //                    id: button
+                //                    width: 32
+                //                    height: 32
+                //                    text: "!"
+                //                    anchors.top: scene3d.top
+                //                    anchors.leftMargin: 5
+                //                    anchors.topMargin: 5
+                //                    anchors.left: scene3d.left
+                //                    font.pixelSize: Qt.application.font.pixelSize * 1.5
+                //                    highlighted: true
+                //                    Universal.accent: Universal.Olive
+                //                    Universal.foreground: Universal.Crimson
+                //                    onClicked: flags()
+                //                }
             }
 
             Rectangle {
                 id: rectCompass
                 color: Qt.rgba(0.15, 0.12, 0.22, 0.8)
                 radius: 5
-                anchors.left: rect.right
+                anchors.left: rectBatt.right
                 layer.effect: shadow
                 //                layer.effect: DropShadow {
                 //                    color: "#000000"
@@ -347,17 +345,17 @@ Page{
                 //                    samples: 25
                 //                    verticalOffset: 5
                 //                }
-                anchors.top: rect.top
-                anchors.topMargin: rect.height/2
+                anchors.top: rectBatt.top
+                anchors.topMargin: 0
                 // height: Scaling.vscale(300)
-                anchors.rightMargin: Scaling.hscale(40)
-                anchors.bottom: rect.bottom
+                anchors.rightMargin: Scaling.hscale(20)
+                anchors.bottom: rectBatt.bottom
                 anchors.right: rectLeft.right
-                anchors.leftMargin: Scaling.hscale(40)
+                anchors.leftMargin: Scaling.hscale(20)
                 layer.enabled: true
                 Loader {
                     id: compassLabel
-                    height: Scaling.vscale(40)
+                    height: Scaling.vscale(50)
                     anchors.left: rectCompass.left
                     anchors.top: rectCompass.top
                     sourceComponent: label
@@ -380,6 +378,7 @@ Page{
                     horizontalAlignment: Text.AlignHCenter
                     anchors.bottom: compassLabel.bottom
                     font.bold: true
+                    fontSizeMode: Text.Fit
                 }
 
                 Text {
@@ -395,6 +394,7 @@ Page{
                     anchors.bottom: compassLabel.bottom
                     font.bold: true
                     anchors.right: compassLabel.right
+                    fontSizeMode: Text.Fit
                 }
 
                 Image {
@@ -417,7 +417,7 @@ Page{
                     anchors.topMargin: Scaling.vscale(25)
                     anchors.rightMargin: Scaling.hscale(30)
                     anchors.bottomMargin: Scaling.vscale(30)
-                    source: "qrc:/img/overlayCompass.png"
+                    source: "qrc:/images/img/overlayCompass.png"
                     antialiasing: true
                     visible: true
                     layer.enabled: true
@@ -429,7 +429,7 @@ Page{
                 Image {
                     id: pointerCompass
                     smooth: false
-                    source: "qrc:/img/pointerCompass.png"
+                    source: "qrc:/images/img/pointerCompass.png"
                     transformOrigin: Item.Center
                     antialiasing: true
                     scale: 0.35
@@ -439,8 +439,8 @@ Page{
 
                 Text {
                     id: compValue
-                    width: Scaling.hscale(75)
-                    height: Scaling.vscale(15)
+                    //                    width: Scaling.hscale(75)
+                    //                    height: Scaling.vscale(15)
                     color: "#ffffff"
                     text: String(UdpClient.dataCompass) + "°"
                     verticalAlignment: Text.AlignVCenter
@@ -449,9 +449,10 @@ Page{
                     anchors.rightMargin: Scaling.hscale(10)
                     anchors.bottomMargin: Scaling.vscale(15)
                     font.family: "Courier"
-                    font.pointSize: Scaling.tscale(18)
+                    font.pointSize: Scaling.tscale(20)
                     horizontalAlignment: Text.AlignHCenter
                     font.bold: true
+                    fontSizeMode: Text.Fit
 
                 }
 
@@ -463,16 +464,17 @@ Page{
                 color: Qt.rgba(0.15, 0.12, 0.22, 0.8)
                 radius: 5
                 border.width: 0
-                anchors.right: rectCompass.right
+                anchors.right: rect.right
                 // height: Scaling.vscale(rectCompass.height)
-                anchors.top: rectCompass.bottom
-                anchors.topMargin: Scaling.vscale(35)
+                anchors.top: rect.bottom
+                anchors.topMargin: Scaling.vscale(25)
                 //anchors.leftMargin: Scaling.hscale(40)
-                anchors.left: rectCompass.left
+                //anchors.left: rectCompass.left
                 //anchors.rightMargin: Scaling.hscale(40)
                 layer.enabled: true
                 anchors.bottomMargin: Scaling.vscale(40)
-
+                anchors.left: loadRhinoInfo.right
+                anchors.leftMargin: Scaling.hscale(20);
                 anchors.bottom:rectLeft.bottom
                 antialiasing: true
                 layer.effect: shadow
@@ -529,6 +531,7 @@ Page{
                     horizontalAlignment: Text.AlignHCenter
                     font.pointSize: Scaling.tscale(18)
                     verticalAlignment: Text.AlignVCenter
+                    fontSizeMode: Text.Fit
 
                 }
 
@@ -546,6 +549,7 @@ Page{
                     verticalAlignment: Text.AlignVCenter
                     antialiasing: true
                     font.pointSize: Scaling.tscale(18)
+                    fontSizeMode: Text.Fit
                 }
             }
         }
@@ -594,86 +598,134 @@ Page{
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.leftMargin: Scaling.hscale(5)
                     anchors.bottomMargin: Scaling.hscale(5)
+                    //mediaplayer1Source: "sdd"
                 }
 
-//                Rectangle {
-//                    id: rectangle
-//                    height: 50
-//                    color: "#00000000"
-//                    radius: 2
-//                    anchors.left: parent.left
-//                    anchors.rightMargin: 0
+                //                Rectangle {
+                //                    id: rectangle
+                //                    height: 50
+                //                    color: "#00000000"
+                //                    radius: 2
+                //                    anchors.left: parent.left
+                //                    anchors.rightMargin: 0
 
-                    Loader {
-                        id:kameralabel
-                        anchors.top: parent.top
-                        height: Scaling.vscale(40)
-                        anchors.leftMargin: Scaling.hscale(-1)
-                        sourceComponent: label
-                        anchors.right: parent.right
-                        anchors.rightMargin: Scaling.hscale(-1)
-                        // antialiasing: true
-                        anchors.left: parent.left
-                        active: true
-                    }
-                    Text {
-                        id: kameraicon
-                        width: Scaling.hscale(60)
-                        color: "#ffffff"
-                        text: qsTr("\uf083")
-                        font.family: myfont.name
-                        anchors.bottom: kameralabel.bottom
-                        anchors.left: kameralabel.left
-                        anchors.top: kameralabel.top
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        font.pointSize: Scaling.tscale(18)
-                    }
+                Loader {
+                    id:kameralabel
+                    anchors.top: parent.top
+                    height: Scaling.vscale(40)
+                    anchors.leftMargin: Scaling.hscale(-1)
+                    sourceComponent: label
+                    anchors.right: parent.right
+                    anchors.rightMargin: Scaling.hscale(-1)
+                    // antialiasing: true
+                    anchors.left: parent.left
+                    active: true
+                }
+                Text {
+                    id: kameraicon
+                    width: Scaling.hscale(60)
+                    color: "#ffffff"
+                    text: qsTr("\uf083")
+                    font.family: myfont.name
+                    anchors.bottom: kameralabel.bottom
+                    anchors.left: kameralabel.left
+                    anchors.top: kameralabel.top
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pointSize: Scaling.tscale(18)
+                    fontSizeMode: Text.Fit
+                }
 
-                    Text {
-                        id:kameratext
-                        color: "#ffffff"
-                        text: "KAMERA"
-                        anchors.left: kameraicon.right
-                        anchors.right: kameralabel.right
-                        anchors.bottom: kameralabel.bottom
-                        anchors.top: kameralabel.top
-                        font.bold: true
-                        font.pointSize: Scaling.tscale(18)
-                        antialiasing: true
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignLeft
-                        font.family: "Courier"
-                    }
+                Text {
+                    id:kameratext
+                    color: "#ffffff"
+                    text: "KAMERA"
+                    anchors.left: kameraicon.right
+                    anchors.right: kameralabel.right
+                    anchors.bottom: kameralabel.bottom
+                    anchors.top: kameralabel.top
+                    font.bold: true
+                    font.pointSize: Scaling.tscale(18)
+                    antialiasing: true
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    font.family: "Courier"
+                    fontSizeMode: Text.Fit
+                }
 
 
                 //}
             }
 
+            QQC1.TextField{
+                id: cameraUrl
+                anchors.top: rectCamera.bottom
+                anchors.topMargin: Scaling.vscale(15);
+                anchors.right: rectCamera.right
+                placeholderText: "Masukkan URL kamera!"
+                style: TextFieldStyle {
+                    textColor: "black"
+                    background: Rectangle {
+                        radius: 5
+                        implicitWidth: 350
+                        implicitHeight: 40
+                        border.color: "#333"
+                        border.width: 1
+                    }
+                }
+            }
 
+            QQC1.Button{
+                id: updateUrl
+                text: "Update"
+                anchors.right: cameraUrl.left
+                anchors.top: cameraUrl.top
+                anchors.rightMargin: Scaling.hscale(30)
+                focus: true
+
+                style: ButtonStyle{
+                    background: Rectangle {
+                        implicitWidth: 100
+                        implicitHeight: cameraUrl.height
+                        border.width: control.activeFocus ? 2 : 1
+                        border.color: "#888"
+                        radius: 4
+                        gradient: Gradient {
+                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                        }
+                    }
+                    label: Text{
+                        text: "Update"
+                        color: "gray"
+                        font.bold: true
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                }
+
+                onClicked: {
+                    if(cameraUrl.text !== ""){
+                        stream.mediaplayer1Source = cameraUrl.text
+                    }
+                    console.log(stream.mediaplayer1Source)
+                }
+            }
 
             Rectangle {
-                id: rectangle1
+                id: rectDateTime
                 color: Qt.rgba(0.15, 0.12, 0.22, 0.8)
                 radius: 5
                 anchors.top: rectCamera.bottom
-                anchors.topMargin: Scaling.vscale(50)
+                anchors.topMargin: Scaling.vscale(90)
                 anchors.left: parent.left
                 anchors.leftMargin: Scaling.hscale(150)
                 anchors.right: parent.right
                 anchors.rightMargin: Scaling.hscale(40)
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: Scaling.vscale(80)
+                anchors.bottomMargin: Scaling.vscale(40)
                 layer.enabled: true
                 layer.effect: shadow
-                //                layer.effect: DropShadow {
-                //                    color: "#000000"
-                //                    radius: 20
-                //                    transparentBorder: true
-                //                    horizontalOffset: -5
-                //                    samples: 25
-                //                    verticalOffset: 5
-                //                }
 
                 Text {
                     id: time
@@ -691,6 +743,7 @@ Page{
                     anchors.right: parent.right
                     anchors.rightMargin: Scaling.hscale(50)
                     font.pointSize: Scaling.tscale(60)
+                    fontSizeMode: Text.Fit
                     //text: "13:34"
                     function updateTime(){
                         time.text = Qt.formatDateTime(new Date(),"hh:mm")
@@ -710,6 +763,7 @@ Page{
                     anchors.top: time.bottom
                     anchors.topMargin: 0
                     font.pointSize: Scaling.tscale(20)
+                    fontSizeMode: Text.Fit
                     //text: "Senin, 31 Agustus 2019"
                     font.family: "Courier"
                     function updateDate(){
@@ -738,3 +792,8 @@ Page{
 }
 
 
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

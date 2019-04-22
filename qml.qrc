@@ -1,5 +1,17 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/images">
+        <file>img/background.png</file>
+        <file>img/ceramic_small_diamond_ambient_occlusion.png</file>
+        <file>img/ceramic_small_diamond_basecolor.png</file>
+        <file>img/ceramic_small_diamond_metallic.png</file>
+        <file>img/ceramic_small_diamond_normal.png</file>
+        <file>img/ceramic_small_diamond_roughness.png</file>
+        <file>img/mainmenupict.png</file>
+        <file>img/overlayCompass.png</file>
+        <file>img/pointerCompass.png</file>
+    </qresource>
+    <qresource prefix="/file_obj">
+        <file>obj/plane-10x10.obj</file>
         <file>obj/ball.obj</file>
         <file>obj/base.obj</file>
         <file>obj/elbow.obj</file>
@@ -9,28 +21,25 @@
         <file>obj/turntable.obj</file>
         <file>obj/untitled.obj</file>
         <file>obj/wrist.obj</file>
-        <file>obj/plane-10x10.obj</file>
-        <file>qml/CameraStream.qml</file>
-        <file>qml/main.qml</file>
-        <file>qml/MainGUI.qml</file>
-        <file>qml/mainGUI2.qml</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>font/Font Awesome 5 Brands-Regular-400.otf</file>
+        <file>font/Font Awesome 5 Free-Regular-400.otf</file>
+        <file>font/Font Awesome 5 Free-Solid-900.otf</file>
+    </qresource>
+    <qresource prefix="/qml">
         <file>qml/ObjectRhino.qml</file>
         <file>qml/Page1Form.qml</file>
         <file>qml/Page2Form.qml</file>
         <file>qml/rhinoInfo.qml</file>
         <file>qml/ScreenScale.qml</file>
+        <file>qml/CameraStream.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/MainGUI.qml</file>
+        <file>qml/mainGUI2.qml</file>
+    </qresource>
+    <qresource prefix="/cubemaps">
         <file>cubemaps/default_irradiance.dds</file>
         <file>cubemaps/default_specular.dds</file>
-        <file>font/Font Awesome 5 Brands-Regular-400.otf</file>
-        <file>font/Font Awesome 5 Free-Regular-400.otf</file>
-        <file>font/Font Awesome 5 Free-Solid-900.otf</file>
-        <file>img/background.png</file>
-        <file>img/ceramic_small_diamond_ambient_occlusion.png</file>
-        <file>img/ceramic_small_diamond_basecolor.png</file>
-        <file>img/ceramic_small_diamond_metallic.png</file>
-        <file>img/ceramic_small_diamond_normal.png</file>
-        <file>img/ceramic_small_diamond_roughness.png</file>
-        <file>img/overlayCompass.png</file>
-        <file>img/pointerCompass.png</file>
     </qresource>
 </RCC>

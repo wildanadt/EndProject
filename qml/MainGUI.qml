@@ -1,67 +1,87 @@
-import QtQuick 2.12
-import QtQml 2.12
-import QtQuick.Controls 2.5
-import QtQuick.Scene3D 2.12
+import QtQuick 2.0
+import QtQml 2.3
+import QtQuick.Controls 2.4
+import QtQuick.Controls 1.4 as QQC1
+import QtQuick.Scene3D 2.0
 import QtGraphicalEffects 1.0
 import QtGraphicalEffects 1.0 as QQ
-import QtQuick.Window 2.12
+import QtQuick.Window 2.11
+import QtQuick.Window 2.2
+import QtQuick.Controls.Universal 2.2
+import QtQuick.Controls.Styles 1.4
 
-import Qt3D.Core 2.12
-import Qt3D.Render 2.12
-import Qt3D.Input 2.12
-import Qt3D.Extras 2.12
+import Qt3D.Core 2.9
+import Qt3D.Render 2.9
+import Qt3D.Input 2.1
+import Qt3D.Extras 2.9
 
 import UdpClient 1.0
 import CustomControls 1.0
+import Scale 1.0
+
+
 
 
 Page{
     id: mainPage
     property bool flag: false
-    property alias element: element
-    //property alias pointerCompassTransformOrigin: pointerCompass.transformOrigin
-    property alias rectangle1Visible: rectRhinoInfo.visible
-    //property alias layar: Screen
-    height: 1080
-    property alias rectCamera: rectCamera
-    width: 1920
-    //onVisibleChildrenChanged: console.log(Screen.desktopAvaibleHeight)
+    property alias rectCameraBottom: rectCamera.bottom
+
+    height: Scaling.screenHeight
+    property alias rectRight: rectRight
+    width: Scaling.screenWidth
+    //        height: 1080
+    //        width: 1920
+//    Timer {
+//        interval: 2000
+//        repeat: true
+//        running: true
+//        triggeredOnStart: true
+//        onTriggered: {
+//            //console.log(Scaling.rectLeftMargin)
+//            //console.log(Scaling.vscale(321))
+//            console.log(mainPage.width)
+//            console.log(Screen.devicePixelRatio)
+//            console.log(Screen.height)
+//            //console.log(Scaling.hscale(60))
+//            // console.log(rect.anchors.topMargin)
+//            //            console.log(rect.anchors.leftMargin)
+
+
+//        }
+//    }
+
     background: Rectangle{
         anchors.fill: parent
         RadialGradient {
-            horizontalOffset: 800
-            verticalOffset: -500
+            horizontalOffset: Scaling.hscale(900)
+            verticalOffset: Scaling.vscale(-500)
             // horizontalRadius: 300
             //verticalRadius: 300
             anchors.fill: parent
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#52219A" }
-                GradientStop { position: 0.5; color: "#0F115A" }
+                GradientStop { position: 1.0; color: "#240336" }
+                GradientStop { position: 0.3; color: "#5C0136" }
+                GradientStop { position: 0.0; color: "#840848" }
             }
         }
-//        RadialGradient {
-//            horizontalOffset: -800
-//            verticalOffset: 500
-//            // horizontalRadius: 300
-//            //verticalRadius: 300
-//            anchors.fill: parent
-//            gradient: Gradient {
-//                GradientStop { position: 0.0; color: "#52219A" }
-//                GradientStop { position: 0.5; color: "#0F115A" }
-//            }
-//        }
     }
+
 
     FontLoader{
         id:myfont
-        source: "qrc:/font/Font Awesome 5 Free-Solid-900.otf"
+        source: "qrc:/font/font/Font Awesome 5 Free-Solid-900.otf"
     }
+    //    FontLoader{
+    //        id:myfontRegular
+    //        source: "qrc:/font/font/Font Awesome 5 Free-Regular-400.otf"
+    //    }
 
     Component{
         id:label
 
         Rectangle{
-            radius: 5
+            radius: Scaling.tscale(5)
             color: Qt.rgba(0.12, 0.11, 0.21, 1)
             antialiasing: true
 
@@ -81,89 +101,133 @@ Page{
 
     Item {
         id: element
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
         anchors.fill: parent
 
         Component{
             id:glow
             Glow {
-
                 samples: 5
                 color: Qt.rgba(0.13, 0.04, 0.22, 1)
                 transparentBorder: true
+            }
+        }
 
+        Component{
+            id:shadow
+            DropShadow {
+
+                color: "#000000"
+                radius: 20
+                transparentBorder: true
+                horizontalOffset: -5
+                samples: 25
+                verticalOffset: 5
             }
         }
 
         Rectangle {
             id: rectLeft
-            width: parent.width *2/5
 
             color: "#00000000"
+            width: mainPage.width *3/5
+            anchors.left: parent.left
+            anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
+
+            Loader{
+                id: loadRhinoInfo
+                source: "qrc:/qml/qml/rhinoInfo.qml"
+                width: rect.width * 1/2
+                //height: Scaling.vscale(240)
+                anchors.left: rect.left
+                anchors.leftMargin: 0
+                visible: flag
+                anchors.top: rect.bottom
+                anchors.topMargin: Scaling.vscale(25)
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Scaling.vscale(40)
+            }
+
             Rectangle {
                 id: rect
-                height: parent.height/2 +100
+                height: parent.height/2 + Scaling.vscale(100)
+                width: parent.width * 7.6/12
                 radius: 5
                 border.width: 2
-                anchors.right: parent.right
-                anchors.rightMargin: 30
+                //anchors.right: parent.right
+                //anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 30
+                anchors.leftMargin: Scaling.hscale(30)
                 anchors.top: parent.top
-                anchors.topMargin: 30
-
+                anchors.topMargin: Scaling.vscale(30)
                 color: "white"
                 border.color: Qt.rgba(0.15, 0.12, 0.22, 1)
-                layer.effect: DropShadow {
-                    color: "#000000"
-                    radius: 20
-                    samples: 25
-                    verticalOffset: 5
-                    transparentBorder: true
-                    horizontalOffset: -5
-                }
+                layer.effect: shadow
                 visible: true
-                antialiasing: true
+                // antialiasing: true
                 layer.enabled: true
 
                 Loader {
                     id: rhinoLabel
                     anchors.top: parent.top
-                    anchors.leftMargin: -1
-                    anchors.bottomMargin: 5
+                    height: Scaling.vscale(40)
+                    anchors.leftMargin: Scaling.hscale(-1)
                     sourceComponent: label
                     anchors.right: parent.right
-                    anchors.bottom: scene3d.top
-                    anchors.rightMargin: -1
-                    antialiasing: true
+                    anchors.rightMargin: Scaling.hscale(-1)
+                    // antialiasing: true
                     anchors.left: parent.left
-                    active: true
+                }
+                Text {
+                    id: rhinoicon
+                    color: "#ffffff"
+                    text: "\uf544"
+                    width: Scaling.hscale(60)
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: rhinoLabel.top
+                    anchors.leftMargin: Scaling.hscale(-1)
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.bottom: rhinoLabel.bottom
+                    font.family: myfont.name
+                    anchors.left: rhinoLabel.left
+                    font.pointSize: Scaling.tscale(18)
+                    fontSizeMode: Text.Fit
                 }
 
                 Text {
                     id: rhinotext
                     color: "#ffffff"
                     text: "PERGERAKAN ROBOT"
-                    anchors.fill: rhinoLabel
+                    anchors.left: rhinoicon.right
+                    anchors.top: rhinoLabel.top
+                    anchors.bottom: rhinoLabel.bottom
+                    anchors.right: rhinoLabel.right
                     verticalAlignment: Text.AlignVCenter
-                    anchors.leftMargin: 83
                     horizontalAlignment: Text.AlignLeft
-                    anchors.rightMargin: -2
                     font.family: "Courier"
-                    font.pointSize: 18
+                    font.pointSize: Scaling.tscale(18)
                     font.bold: true
+                    fontSizeMode: Text.Fit
+
                 }
 
                 Scene3D {
                     id: scene3d
                     aspects: ["input", "logic"]
+                    anchors.top: rhinoLabel.bottom
+                    anchors.left: rect.left
+                    anchors.right: rect.right
+                    anchors.bottom: rect.bottom
+                    anchors.leftMargin: Scaling.hscale(10)
+                    anchors.bottomMargin: Scaling.vscale(10)
+                    anchors.topMargin: Scaling.vscale(10)
+                    anchors.rightMargin: Scaling.hscale(10)
+                    cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
+                    // antialiasing: true
+
                     Entity {
                         components: [
                             RenderSettings {
@@ -192,14 +256,63 @@ Page{
                         ObjectRhino {
                         }
                     }
-                    anchors.fill: parent
-                    anchors.leftMargin: 10
-                    anchors.bottomMargin: 10
-                    anchors.topMargin: 55
-                    anchors.rightMargin: 10
-                    cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
-                    antialiasing: true
+
+
+                    //                        Entity {
+                    //                            components: [
+                    //                                PointLight {
+                    //                                    enabled: parent.enabled
+                    //                                    color: "black"
+                    //                                    intensity: 0
+                    //                                },
+                    //                                EnvironmentLight {
+                    //                                    enabled: parent.enabled
+
+                    //                                    irradiance: TextureLoader {
+                    //                                        source: "qrc:/cubemaps/cubemaps/default_irradiance.dds"
+                    //                                        wrapMode {
+                    //                                            x: WrapMode.ClampToEdge
+                    //                                            y: WrapMode.ClampToEdge
+                    //                                        }
+                    //                                        generateMipMaps: false
+                    //                                    }
+                    //                                    specular: TextureLoader {
+                    //                                        source: "qrc:/cubemaps/cubemaps/default_specular.dds"
+                    //                                        wrapMode {
+                    //                                            x: WrapMode.ClampToEdge
+                    //                                            y: WrapMode.ClampToEdge
+                    //                                        }
+                    //                                        generateMipMaps: false
+                    //                                    }
+                    //                                }
+                    //                            ]
+                    //                        }
+
+                    //                        Entity {
+                    //                            id: floor
+
+                    //                            components: [
+                    //                                Mesh {
+                    //                                    source: "qrc:/obj/obj/plane-10x10.obj"
+                    //                                },
+                    //                                TexturedMetalRoughMaterial {
+                    //                                    baseColor: TextureLoader {
+                    //                                        source: "qrc:/img/img/ceramic_small_diamond_roughness.png"
+                    //                                        format: Texture.SRGB8_Alpha8
+                    //                                        generateMipMaps: true
+                    //                                    }
+                    //                                     metalness: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_metallic.png"; generateMipMaps: true }
+                    //                                     roughness: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_roughness.png"; generateMipMaps: true }
+                    //                                    normal: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_normal.png"; generateMipMaps: true }
+                    //                                     ambientOcclusion: TextureLoader { source: "qrc:/img/img/ceramic_small_diamond_ambient_occlusion.png" }
+                    //                                }
+                    //                            ]
+                    //                        }
+
+
+
                 }
+
 
                 Button {
                     id: button
@@ -211,488 +324,83 @@ Page{
                     anchors.topMargin: 5
                     anchors.left: scene3d.left
                     font.pixelSize: Qt.application.font.pixelSize * 1.5
+                    highlighted: true
+                    Universal.accent: Universal.Olive
+                    Universal.foreground: Universal.Crimson
                     onClicked: flags()
-                }
-
-                Text {
-                    id: rhinoicon
-                    color: "#ffffff"
-                    text: "\uf544"
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.top: rhinotext.top
-                    anchors.leftMargin: -1
-                    anchors.bottomMargin: 0
-                    anchors.topMargin: 0
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.bottom: rhinotext.bottom
-                    anchors.right: rhinotext.left
-                    anchors.rightMargin: 0
-                    font.family: myfont.name
-                    anchors.left: parent.left
-                    font.pixelSize: 20
                 }
             }
 
             Rectangle {
-                id: rectRhinoInfo
-
-                width: 285
-                height: 319
-                color: Qt.rgba(0.15, 0.12, 0.22, 1)
+                id: rectCompass
+                color: Qt.rgba(0.15, 0.12, 0.22, 0.8)
                 radius: 5
-                anchors.right: parent.right
-                anchors.rightMargin: 30
-                visible: flag
-                anchors.top: rect.bottom
-                anchors.topMargin: 35
-                layer.effect: DropShadow {
-                    color: "#000000"
-                    radius: 20
-                    transparentBorder: true
-                    horizontalOffset: -5
-                    samples: 25
-                    verticalOffset: 5
-                }
-                Column {
-                    id: column
-                    x: 0
-                    y: 0
-                    anchors.fill: rectRhinoInfo
-                    spacing: 0
-                    Row {
-                        id: row
-                        width: parent.width
-                        height: parent.height/5
-                        anchors.left: parent.left
-                        spacing: 0
-                        Rectangle {
-                            id: rectangle3
-                            width: parent.width *2/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: cir1
-                                x: 10
-                                y: 16
-                                width: parent.width<parent.height?parent.width:parent.height * 0.5
-                                height: width
-                                color: "#66cccc"
-                                radius: width*0.5
-                                anchors.left: parent.left
-                                anchors.leftMargin: 20
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-
-                            Label {
-                                id: label2
-                                color: "#ffffff"
-                                text: qsTr("Turntable")
-                                font.pointSize: 11
-                                anchors.left: cir1.right
-                                horizontalAlignment: Text.AlignHCenter
-                                anchors.leftMargin: 20
-                                font.bold: true
-                                anchors.rightMargin: 20
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.right: parent.right
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        }
-
-                        Rectangle {
-                            id: rectangle5
-                            width: parent.width/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: rectangle4
-                                color: Qt.rgba(0.1, 0.1, 0.18, 1)
-                                radius: 5
-                                anchors.topMargin: 10
-                                anchors.fill: parent
-                                anchors.leftMargin: 0
-                                Text {
-                                    id: element1
-                                    color: "#ffffff"
-                                    text: String(UdpClient.dataTurntable) + "<b>°<b>"
-                                    anchors.fill: parent
-                                    font.pixelSize: 16
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                anchors.bottomMargin: 10
-                                anchors.rightMargin: 10
-                            }
-                        }
-                    }
-
-                    Row {
-                        id: row1
-                        width: parent.width
-                        height: parent.height/5
-                        anchors.left: parent.left
-                        spacing: 0
-                        Rectangle {
-                            id: rectangle6
-                            width: parent.width *2/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: cir2
-                                x: 10
-                                y: 16
-                                width: parent.width<parent.height?parent.width:parent.height * 0.5
-                                height: width
-                                color: "#cc0033"
-                                radius: width*0.5
-                                anchors.left: parent.left
-                                anchors.leftMargin: 20
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-
-                            Label {
-                                id: label3
-                                color: "#ffffff"
-                                text: qsTr("Sholder")
-                                font.pointSize: 11
-                                anchors.left: cir2.right
-                                horizontalAlignment: Text.AlignHCenter
-                                anchors.leftMargin: 20
-                                font.bold: true
-                                anchors.rightMargin: 20
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.right: parent.right
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        }
-
-                        Rectangle {
-                            id: rectangle8
-                            width: parent.width/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: rectangle7
-                                color: Qt.rgba(0.1, 0.1, 0.18, 1)
-                                radius: 5
-                                anchors.topMargin: 10
-                                anchors.fill: parent
-                                anchors.leftMargin: 0
-                                Text {
-                                    id: element2
-                                    color: "#ffffff"
-                                    text: String(UdpClient.dataSholder) + "<b>°<b>"
-                                    anchors.fill: parent
-                                    font.pixelSize: 16
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                anchors.bottomMargin: 10
-                                anchors.rightMargin: 10
-                            }
-                        }
-                    }
-
-                    Row {
-                        id: row2
-                        width: parent.width
-                        height: parent.height/5
-                        anchors.left: parent.left
-                        spacing: 0
-                        Rectangle {
-                            id: rectangle9
-                            width: parent.width *2/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: cir3
-                                x: 10
-                                y: 16
-                                width: parent.width<parent.height?parent.width:parent.height * 0.5
-                                height: width
-                                color: "#99ff00"
-                                radius: width*0.5
-                                anchors.left: parent.left
-                                anchors.leftMargin: 20
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-
-                            Label {
-                                id: label4
-                                color: "#ffffff"
-                                text: qsTr("Elbow")
-                                font.pointSize: 11
-                                anchors.left: cir3.right
-                                horizontalAlignment: Text.AlignHCenter
-                                anchors.leftMargin: 20
-                                font.bold: true
-                                anchors.rightMargin: 20
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.right: parent.right
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        }
-
-                        Rectangle {
-                            id: rectangle11
-                            width: parent.width/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: rectangle10
-                                color: Qt.rgba(0.1, 0.1, 0.18, 1)
-                                radius: 5
-                                anchors.topMargin: 10
-                                anchors.fill: parent
-                                anchors.leftMargin: 0
-                                Text {
-                                    id: element3
-                                    color: "#ffffff"
-                                    text: String(UdpClient.dataElbow) + "<b>°<b>"
-                                    anchors.fill: parent
-                                    font.pixelSize: 16
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                anchors.bottomMargin: 10
-                                anchors.rightMargin: 10
-                            }
-                        }
-                    }
-
-                    Row {
-                        id: row3
-                        width: parent.width
-                        height: parent.height/5
-                        anchors.left: parent.left
-                        spacing: 0
-                        Rectangle {
-                            id: rectangle12
-                            width: parent.width *2/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: cir4
-                                x: 10
-                                y: 16
-                                width: parent.width<parent.height?parent.width:parent.height * 0.5
-                                height: width
-                                color: "#cc6600"
-                                radius: width*0.5
-                                anchors.left: parent.left
-                                anchors.leftMargin: 20
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-
-                            Label {
-                                id: label5
-                                color: "#ffffff"
-                                text: qsTr("Wrist")
-                                font.pointSize: 11
-                                anchors.left: cir4.right
-                                horizontalAlignment: Text.AlignHCenter
-                                anchors.leftMargin: 20
-                                font.bold: true
-                                anchors.rightMargin: 20
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.right: parent.right
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        }
-
-                        Rectangle {
-                            id: rectangle14
-                            width: parent.width/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: rectangle13
-                                color: Qt.rgba(0.1, 0.1, 0.18, 1)
-                                radius: 5
-                                anchors.topMargin: 10
-                                anchors.fill: parent
-                                anchors.leftMargin: 0
-                                Text {
-                                    id: element4
-                                    color: "#ffffff"
-                                    text: String(UdpClient.dataWrist) + "<b>°<b>"
-                                    anchors.fill: parent
-                                    font.pixelSize: 16
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                anchors.bottomMargin: 10
-                                anchors.rightMargin: 10
-                            }
-                        }
-                    }
-
-                    Row {
-                        id: row4
-                        width: parent.width
-                        height: parent.height/5
-                        anchors.left: parent.left
-                        spacing: 0
-                        Rectangle {
-                            id: rectangle15
-                            width: parent.width *2/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: cir5
-                                x: 10
-                                y: 16
-                                width: parent.width<parent.height?parent.width:parent.height * 0.5
-                                height: width
-                                color: "#66ff66"
-                                radius: width*0.5
-                                anchors.left: parent.left
-                                anchors.leftMargin: 20
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-
-                            Label {
-                                id: label6
-                                color: "#ffffff"
-                                text: qsTr("Flipper")
-                                font.pointSize: 11
-                                anchors.left: cir5.right
-                                horizontalAlignment: Text.AlignHCenter
-                                anchors.leftMargin: 20
-                                font.bold: true
-                                anchors.rightMargin: 20
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.right: parent.right
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        }
-
-                        Rectangle {
-                            id: rectangle17
-                            width: parent.width/3
-                            height: parent.height
-                            color: "#00000000"
-                            Rectangle {
-                                id: rectangle16
-                                color: Qt.rgba(0.1, 0.1, 0.18, 1)
-                                radius: 5
-                                anchors.topMargin: 10
-                                anchors.fill: parent
-                                anchors.leftMargin: 0
-                                Text {
-                                    id: element5
-                                    color: "#ffffff"
-                                    text: String(UdpClient.dataFlipper) + "<b>°<b>"
-                                    anchors.fill: parent
-                                    font.pixelSize: 16
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                anchors.bottomMargin: 10
-                                anchors.rightMargin: 10
-                            }
-                        }
-                    }
-                }
+                anchors.left: rectBatt.right
+                layer.effect: shadow
+                //                layer.effect: DropShadow {
+                //                    color: "#000000"
+                //                    radius: 20
+                //                    transparentBorder: true
+                //                    horizontalOffset: -5
+                //                    samples: 25
+                //                    verticalOffset: 5
+                //                }
+                anchors.top: rectBatt.top
+                anchors.topMargin: 0
+                // height: Scaling.vscale(300)
+                anchors.rightMargin: Scaling.hscale(20)
+                anchors.bottom: rectBatt.bottom
+                anchors.right: rectLeft.right
+                anchors.leftMargin: Scaling.hscale(20)
                 layer.enabled: true
-                border.width: 0
-            }
-        }
-
-        Rectangle {
-            id: rectCenter
-            width: parent.width * 1/5
-            color: "#00000000"
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.left: rectLeft.right
-            anchors.leftMargin: 0
-            Rectangle{
-                id:rectCompass
-                height: 300
-                color: Qt.rgba(0.15, 0.12, 0.22, 1)
-                anchors.rightMargin: 40
-                anchors.leftMargin: 40
-                anchors.topMargin: 380
-                anchors.right: parent.right
-                anchors.left: parent.left
-                anchors.top: parent.top
-                radius:5
-                layer.enabled: true
-                layer.effect: DropShadow {
-                    color: "#000000"
-                    radius: 20
-                    transparentBorder: true
-                    horizontalOffset: -5
-                    samples: 25
-                    verticalOffset: 5
-                }
-
                 Loader {
                     id: compassLabel
-                    height: 50
-                    visible: true
-                    anchors.top: parent.top
+                    height: Scaling.vscale(50)
+                    anchors.left: rectCompass.left
+                    anchors.top: rectCompass.top
                     sourceComponent: label
-                    anchors.left: parent.left
                     asynchronous: false
-                    anchors.bottomMargin: 15
-                    anchors.right: parent.right
+                    visible: true
+                    anchors.right: rectCompass.right
                 }
+
                 Text {
                     id: compicon
-                    width: 40
+                    width: Scaling.hscale(60)
                     color: "#ffffff"
                     text: "\uf14e"
-                    anchors.topMargin: 0
-                    anchors.right: compassText.left
-                    anchors.top: compassLabel.top
-                    transformOrigin: Item.Center
-                    anchors.rightMargin: 0
-                    anchors.bottom: compassLabel.bottom
-                    anchors.bottomMargin: 0
-                    font.pointSize: 18
-                    anchors.left: compassLabel.left
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.leftMargin: 0
-                    font.family: myfont.name
-                    font.bold: true
                     verticalAlignment: Text.AlignVCenter
+                    font.pointSize: Scaling.tscale(18)
+                    anchors.left: compassLabel.left
+                    anchors.top: compassLabel.top
+                    font.family: myfont.name
+                    transformOrigin: Item.Center
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.bottom: compassLabel.bottom
+                    font.bold: true
+                    fontSizeMode: Text.Fit
                 }
+
                 Text {
                     id: compassText
                     color: "#ffffff"
                     text: "KOMPAS"
-                    anchors.topMargin: 0
-                    anchors.top: compassLabel.top
-                    font.pixelSize: 18
-                    anchors.bottom: compassLabel.bottom
-                    anchors.left: compassLabel.left
-                    horizontalAlignment: Text.AlignLeft
-                    anchors.leftMargin: 60
-                    font.family: "Courier"
-                    anchors.bottomMargin: 0
-                    font.bold: true
-                    anchors.rightMargin: 0
                     verticalAlignment: Text.AlignVCenter
+                    anchors.left: compicon.right
+                    anchors.top: compassLabel.top
+                    font.family: "Courier"
+                    font.pointSize: Scaling.tscale(18)
+                    horizontalAlignment: Text.AlignLeft
+                    anchors.bottom: compassLabel.bottom
+                    font.bold: true
                     anchors.right: compassLabel.right
+                    fontSizeMode: Text.Fit
                 }
 
                 Image {
                     id: overlayCompass
-                    height: 0
-                    anchors.bottomMargin: 15
-                    anchors.top: compassLabel.bottom
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
+                    smooth: false
                     anchors.left: parent.left
-                    anchors.topMargin: 20
-                    visible: true
-                    rotation: UdpClient.dataCompass
-                    source: "qrc:/img/img/overlayCompass.png"
-                    fillMode: Image.PreserveAspectFit
                     layer.effect: Glow {
                         color: "#52219a"
                         radius: 10
@@ -700,125 +408,158 @@ Page{
                         spread: 0.2
                         samples: 10
                     }
-                    layer.enabled: true
+                    //sourceSize.height: 1000
+                    //sourceSize.width: 1000
+                    anchors.top: compassLabel.bottom
+                    anchors.right: rectCompass.right
+                    anchors.bottom: rectCompass.bottom
+                    anchors.leftMargin: Scaling.hscale(30)
+                    anchors.topMargin: Scaling.vscale(25)
+                    anchors.rightMargin: Scaling.hscale(30)
+                    anchors.bottomMargin: Scaling.vscale(30)
+                    source: "qrc:/images/img/overlayCompass.png"
                     antialiasing: true
-                    //transformOrigin: pointerCompassTransformOrigin
+                    visible: true
+                    layer.enabled: true
+                    fillMode: Image.PreserveAspectFit
+                    rotation: UdpClient.dataCompass
+
                 }
+
                 Image {
                     id: pointerCompass
-                    anchors.fill: overlayCompass
-                    source: "qrc:/img/img/pointerCompass.png"
-                    fillMode: Image.PreserveAspectFit
-                    scale: 0.35
-                    antialiasing: true
+                    smooth: false
+                    source: "qrc:/images/img/pointerCompass.png"
                     transformOrigin: Item.Center
+                    antialiasing: true
+                    scale: 0.35
+                    anchors.fill: overlayCompass
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Text {
+                    id: compValue
+//                    width: Scaling.hscale(75)
+//                    height: Scaling.vscale(15)
+                    color: "#ffffff"
+                    text: String(UdpClient.dataCompass) + "°"
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.right: rectCompass.right
+                    anchors.bottom: rectCompass.bottom
+                    anchors.rightMargin: Scaling.hscale(10)
+                    anchors.bottomMargin: Scaling.vscale(15)
+                    font.family: "Courier"
+                    font.pointSize: Scaling.tscale(20)
+                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: true
+                    fontSizeMode: Text.Fit
+
                 }
 
             }
 
             Rectangle {
-            id: rectBatt
-            color: Qt.rgba(0.15, 0.12, 0.22, 1)
-            radius: 5
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 60
-            anchors.rightMargin: 40
-            anchors.leftMargin: 40
-            anchors.top: rectCompass.bottom
-            anchors.right: parent.right
-            anchors.left: parent.left
-            anchors.topMargin: 40
-            layer.effect: DropShadow {
-                color: "#000000"
-                radius: 20
-                transparentBorder: true
-                horizontalOffset: -5
-                samples: 25
-                verticalOffset: 5
-            }
-            antialiasing: true
-            layer.enabled: true
-            border.width: 0
-
-            Loader {
-                height: 40
-                anchors.right: parent.right
-                sourceComponent: label
-                anchors.left: parent.left
-                anchors.top: parent.top
-            }
-
-            RadialBar {
-                width: 150
-                height: 150
+                id: rectBatt
+                //x: 40
+                color: Qt.rgba(0.15, 0.12, 0.22, 0.8)
+                radius: 5
+                border.width: 0
+                anchors.right: rect.right
+                // height: Scaling.vscale(rectCompass.height)
+                anchors.top: rect.bottom
+                anchors.topMargin: Scaling.vscale(25)
+                //anchors.leftMargin: Scaling.hscale(40)
+                //anchors.left: rectCompass.left
+                //anchors.rightMargin: Scaling.hscale(40)
+                layer.enabled: true
+                anchors.bottomMargin: Scaling.vscale(40)
+                anchors.left: loadRhinoInfo.right
+                anchors.leftMargin: Scaling.hscale(20);
+                anchors.bottom:rectLeft.bottom
                 antialiasing: true
-                minValue: 0
-                anchors.verticalCenterOffset: 20
-                maxValue: 100
-                startAngle: 180
-                penStyle: Qt.RoundCap
-                textFont.pointSize: 16
-                anchors.centerIn: parent
-                dialType: RadialBar.FullDial
-                foregroundColor: "#191a2f"
-                value: UdpClient.dataBattery
-                anchors.top: parent.top
-                progressColor: Qt.rgba(0.02, 0.67, 0.59, 1)
-                textFont.family: "Consolas"
-                dialWidth: 5
-                textFont.italic: false
-                suffixText: "%"
-                spanAngle: 180
-                textColor: Qt.rgba(0.13, 0.71, 0.46, 1)
-            }
+                layer.effect: shadow
+                //                layer.effect: DropShadow {
+                //                    color: "#000000"
+                //                    radius: 20
+                //                    horizontalOffset: -5
+                //                    verticalOffset: 5
+                //                    transparentBorder: true
+                //                    samples: 25
+                //                }
+                Loader {
+                    id:battLabel
+                    height: Scaling.vscale(50)
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    sourceComponent: label
+                    anchors.top: parent.top
+                }
 
-            Text {
-                id: battext
-                height: 40
-                color: "#ffffff"
-                text: "BATERAI"
-                anchors.right: parent.right
-                anchors.topMargin: 0
-                antialiasing: true
-                anchors.leftMargin: 60
-                font.family: "Courier"
-                anchors.left: parent.left
-                font.bold: true
-                anchors.rightMargin: 0
-                anchors.top: parent.top
-                font.pointSize: 15
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-            }
+                RadialBar {
+                    width: rectBatt.width/2
+                    height: width
+                    value: UdpClient.dataBattery
+                    dialType: RadialBar.FullDial
+                    anchors.top: parent.top
+                    textFont.family: "Consolas"
+                    spanAngle: 180
+                    startAngle: 180
+                    suffixText: "%"
+                    maxValue: 100
+                    foregroundColor: "#240336"
+                    penStyle: Qt.RoundCap
+                    textColor: Qt.rgba(0.13, 0.71, 0.46, 1)
+                    minValue: 0
+                    dialWidth: 5
+                    antialiasing: true
+                    textFont.pointSize: Scaling.tscale(16)
+                    anchors.centerIn: rectBatt
+                    progressColor: Qt.rgba(0.02, 0.67, 0.59, 1)
+                    anchors.verticalCenterOffset: Scaling.vscale(20)
+                    textFont.italic: false
+                }
 
-            Text {
-                id: baticon
-                height: 40
-                color: "#ffffff"
-                text: "\uf5df"
-                anchors.right: battext.left
-                anchors.topMargin: 0
-                anchors.leftMargin: 0
-                font.family: myfont.name
-                font.pixelSize: 18
-                anchors.left: parent.left
-                anchors.rightMargin: 0
-                anchors.top: parent.top
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-            }
+                Text {
+                    id: baticon
+                    color: "#ffffff"
+                    text: "\uf5df"
+                    width: Scaling.hscale(60)
+                    anchors.top: battLabel.top
+                    anchors.left: battLabel.left
+                    anchors.bottom: battLabel.bottom
+                    font.family: myfont.name
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pointSize: Scaling.tscale(18)
+                    verticalAlignment: Text.AlignVCenter
+                    fontSizeMode: Text.Fit
 
+                }
+
+                Text {
+                    id: battext
+                    color: "#ffffff"
+                    text: "BATERAI"
+                    font.family: "Courier"
+                    anchors.left: baticon.right
+                    anchors.right: battLabel.right
+                    anchors.top: battLabel.top
+                    anchors.bottom: battLabel.bottom
+                    font.bold: true
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    antialiasing: true
+                    font.pointSize: Scaling.tscale(18)
+                    fontSizeMode: Text.Fit
+                }
+            }
         }
 
         Rectangle {
             id: rectRight
             color: "#00000000"
-            clip: false
-            anchors.left: rectCenter.right
+            anchors.left: rectLeft.right
             anchors.leftMargin: 0
             anchors.top: parent.top
-            anchors.topMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.right: parent.right
@@ -827,148 +568,235 @@ Page{
 
             Rectangle {
                 id: rectCamera
-                height: parent.height/2 +100
+                height: parent.height/2 + Scaling.vscale(100)
+                width: parent.width - Scaling.hscale(20)
                 color: Qt.rgba(0.12, 0.11, 0.21, 1)
                 radius: 5
-                anchors.bottomMargin: 60
                 anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.rightMargin: 30
-                anchors.leftMargin: 30
-                layer.effect: DropShadow {
-                    color: "#000000"
-                    radius: 20
-                    transparentBorder: true
-                    horizontalOffset: -5
-                    verticalOffset: 5
-                    samples: 25
-                }
-                border.width: 0
+                anchors.rightMargin: Scaling.hscale(30)
+                antialiasing: true
+                anchors.top: parent.top
+                anchors.topMargin: Scaling.vscale(30)
+                layer.effect: shadow
+                //                layer.effect: DropShadow {
+                //                    color: "#000000"
+                //                    radius: 20
+                //                    transparentBorder: true
+                //                    horizontalOffset: -5
+                //                    verticalOffset: 5
+                //                    samples: 25
+                //                }
                 layer.enabled: true
 
                 CameraStream {
                     id: stream
                     radius: 5
                     anchors.fill: parent
-                    anchors.rightMargin: 5
-                    anchors.topMargin: 15
+                    anchors.rightMargin: Scaling.hscale(5)
+                    anchors.topMargin: Scaling.vscale(15)
                     antialiasing: true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.leftMargin: 5
-                    anchors.bottomMargin: 5
+                    anchors.leftMargin: Scaling.hscale(5)
+                    anchors.bottomMargin: Scaling.hscale(5)
+                    //mediaplayer1Source: "sdd"
                 }
 
-                Rectangle {
-                    id: rectangle
-                    height: 50
-                    color: "#00000000"
-                    radius: 2
-                    anchors.left: parent.left
-                    anchors.rightMargin: 0
-                    Loader {
-                        height: 50
-                        anchors.fill: parent
-                        visible: true
-                        antialiasing: true
-                        sourceComponent: label
-                    }
+                //                Rectangle {
+                //                    id: rectangle
+                //                    height: 50
+                //                    color: "#00000000"
+                //                    radius: 2
+                //                    anchors.left: parent.left
+                //                    anchors.rightMargin: 0
 
-                    Text {
-                        width: 300
-                        height: 50
-                        color: "#ffffff"
-                        text: "KAMERA"
-                        font.bold: true
-                        anchors.fill: rectangle
-                        font.pointSize: 18
-                        antialiasing: true
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        font.family: "Courier"
-                    }
-                    anchors.topMargin: 0
-                    antialiasing: true
+                Loader {
+                    id:kameralabel
                     anchors.top: parent.top
-                    anchors.leftMargin: 0
+                    height: Scaling.vscale(40)
+                    anchors.leftMargin: Scaling.hscale(-1)
+                    sourceComponent: label
                     anchors.right: parent.right
+                    anchors.rightMargin: Scaling.hscale(-1)
+                    // antialiasing: true
+                    anchors.left: parent.left
+                    active: true
+                }
+                Text {
+                    id: kameraicon
+                    width: Scaling.hscale(60)
+                    color: "#ffffff"
+                    text: qsTr("\uf083")
+                    font.family: myfont.name
+                    anchors.bottom: kameralabel.bottom
+                    anchors.left: kameralabel.left
+                    anchors.top: kameralabel.top
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pointSize: Scaling.tscale(18)
+                    fontSizeMode: Text.Fit
+                }
+
+                Text {
+                    id:kameratext
+                    color: "#ffffff"
+                    text: "KAMERA"
+                    anchors.left: kameraicon.right
+                    anchors.right: kameralabel.right
+                    anchors.bottom: kameralabel.bottom
+                    anchors.top: kameralabel.top
+                    font.bold: true
+                    font.pointSize: Scaling.tscale(18)
+                    antialiasing: true
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    font.family: "Courier"
+                    fontSizeMode: Text.Fit
+                }
+
+
+                //}
+            }
+
+            QQC1.TextField{
+                id: cameraUrl
+                anchors.top: rectCamera.bottom
+                anchors.topMargin: Scaling.vscale(15);
+                anchors.right: rectCamera.right
+                placeholderText: "Masukkan URL kamera!"
+                style: TextFieldStyle {
+                    textColor: "black"
+                    background: Rectangle {
+                        radius: 5
+                        implicitWidth: 350
+                        implicitHeight: 40
+                        border.color: "#333"
+                        border.width: 1
+                    }
                 }
             }
 
+            Button{
+                id: updateUrl
+                text: "Update"
+                anchors.right: cameraUrl.left
+                anchors.top: cameraUrl.top
+                anchors.rightMargin: Scaling.hscale(30)
+                focus: true
+
+                contentItem: Text {
+                    text: updateUrl.text
+                    styleColor: "#18013e"
+                    // font: "Arial"
+                    opacity: enabled ? 1.0 : 0.3
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+                //                background: Rectangle {
+                //                    implicitWidth: cameraUrl.width
+                //                    implicitHeight: cameraUrl.height
+                //                    opacity: enabled ? 1 : 0.3
+                //                    border.color: "#333"
+                //                    border.width: 1
+                //                    radius: 3
+                //                }
+                onClicked: {
+                    stream.mediaplayer1Source = cameraUrl.text
+                    console.log(stream.mediaplayer1Source)
+                }
+            }
+
+            Rectangle {
+                id: rectDateTime
+                color: Qt.rgba(0.15, 0.12, 0.22, 0.8)
+                radius: 5
+                anchors.top: rectCamera.bottom
+                anchors.topMargin: Scaling.vscale(90)
+                anchors.left: parent.left
+                anchors.leftMargin: Scaling.hscale(150)
+                anchors.right: parent.right
+                anchors.rightMargin: Scaling.hscale(40)
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Scaling.vscale(40)
+                layer.enabled: true
+                layer.effect: shadow
+                //                layer.effect: DropShadow {
+                //                    color: "#000000"
+                //                    radius: 20
+                //                    transparentBorder: true
+                //                    horizontalOffset: -5
+                //                    samples: 25
+                //                    verticalOffset: 5
+                //                }
+
+                Text {
+                    id: time
+                    color: "#ffffff"
+                    //text: new Date().toLocaleTimeString()
+                    font.family: "Courier"
+                    verticalAlignment: Text.AlignBottom
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: Scaling.hscale(300)
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Scaling.vscale(100)
+                    anchors.top: parent.top
+                    anchors.topMargin: Scaling.vscale(70)
+                    anchors.right: parent.right
+                    anchors.rightMargin: Scaling.hscale(50)
+                    font.pointSize: Scaling.tscale(60)
+                    fontSizeMode: Text.Fit
+                    //text: "13:34"
+                    function updateTime(){
+                        time.text = Qt.formatDateTime(new Date(),"hh:mm")
+
+                    }
+                }
+                Text {
+                    id: date
+                    color: "#ffffff"
+                    horizontalAlignment: Text.AlignRight
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: Scaling.hscale(100)
+                    anchors.right: parent.right
+                    anchors.rightMargin: Scaling.hscale(50)
+                    anchors.top: time.bottom
+                    anchors.topMargin: 0
+                    font.pointSize: Scaling.tscale(20)
+                    fontSizeMode: Text.Fit
+                    //text: "Senin, 31 Agustus 2019"
+                    font.family: "Courier"
+                    function updateDate(){
+                        date.text = Qt.formatDateTime(new Date(),"dddd, dd MMMM yyyy")
+                    }
+                }
+
+                Timer {
+                    id: textTimer
+                    interval: 60000
+                    repeat: true
+                    running: true
+                    triggeredOnStart: true
+                    onTriggered: {
+                        date.updateDate()
+                        time.updateTime()
+                    }
+                }
+
+            }
+
         }
+
 
     }
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*##^## Designer {
-    D{i:19;anchors_width:768}D{i:13;anchors_width:768}D{i:27;anchors_width:285;anchors_x:"-9";anchors_y:"-8"}
-D{i:74;anchors_height:300;anchors_width:200}D{i:65;anchors_height:200}D{i:81;anchors_height:0;anchors_width:307.2}
-D{i:80;anchors_height:200;anchors_width:200}
+    D{i:0;autoSize:true;height:480;width:640}
 }
  ##^##*/

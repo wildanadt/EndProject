@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.4
-import QtQuick.Controls 1.4 as QQ
+import QtQuick.Controls 1.4 as QQC1
+import QtQuick.Controls.Styles 1.4
 
 //import QtQuick.Scene3D 2.12
 import QtGraphicalEffects 1.0
@@ -21,8 +22,8 @@ import UdpClient 1.0
 ApplicationWindow {
     id: window
     visible: true
-    //visibility: Window.FullScreen
-    height:Scaling.screenHeight
+    // visibility: Window.FullScreen
+    height: Scaling.screenHeight
     width: Scaling.screenWidth
 
 
@@ -161,26 +162,46 @@ ApplicationWindow {
         }
         initialItem:  Page {
             id: page1
+            background: Image {
+                id: menupict
+                source: "qrc:/images/img/mainmenupict.png"
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectCrop
+            }
             Item {
                 anchors.fill: parent
-                Rectangle{
+//                Rectangle{
 
-                    height: Scaling.vscale(25)
-                    width: Scaling.hscale(200)
-                    border.width: 1
-                    border.color: "gray"
-                    anchors.horizontalCenter: loginbutton.horizontalCenter
-                    anchors.bottom: loginbutton.top
-                    anchors.bottomMargin: Scaling.vscale(20)
+//                    height: Scaling.vscale(30)
+//                    width: Scaling.hscale(200)
+//                    border.width: 1
+//                    border.color: "gray"
+//                    anchors.horizontalCenter: loginbutton.horizontalCenter
+//                    anchors.bottom: loginbutton.top
+//                    anchors.bottomMargin: Scaling.vscale(20)
 
-
-                    QQ.TextField{
+                    QQC1.TextField{
                         id: passField
+                        anchors.horizontalCenter: loginbutton.horizontalCenter
+                        anchors.bottom: loginbutton.top
+                        anchors.bottomMargin: Scaling.vscale(20)
                         placeholderText: qsTr("Masukkan ID robot!")
+                       // placeholderTextColor: "gray"
                         echoMode: TextInput.Password
-                        anchors.fill: parent
+                       // anchors.fill: parent
+                        style: TextFieldStyle{
+                            textColor: "black"
+                            background: Rectangle {
+                                radius: 5
+                                implicitWidth: 350
+                                implicitHeight: 40
+                                border.color: "#333"
+                                border.width: 2
+                            }
+                        }
+
                     }
-                }
+//                }
                 Rectangle{
                     id:warningrect
                     anchors.horizontalCenter: loginbutton.horizontalCenter
@@ -213,21 +234,48 @@ ApplicationWindow {
                 }
 
 
-                Button{
-                    id: loginbutton
-                    text: "Masuk"
+                QQC1.Button{
+                    //text: "Masuk"
 
-                    anchors.centerIn: parent
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    id: loginbutton
+
+
+                    style: ButtonStyle{
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 35
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 4
+                            gradient: Gradient {
+                                GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                            }
+                        }
+                        label: Text{
+                            text: "Masuk"
+                            color: "gray"
+                            font.bold: true
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignHCenter
+                        }
+                    }
+
                     onClicked: {
-                        if(passField.text=="robot01"){
-                            stackView.push("qrc:/qml/mainGUI2.qml")
+                        if(passField.text==="1"){
+                            stackView.push("qrc:/qml/qml/mainGUI2.qml")
                             warningrect.visible = false
                             warningAnim.running = false
-                        }
-                        else
-                            warningrect.visible = true
-                        warningAnim.running = true
 
+                        }
+                        else{
+                            warningrect.visible = true
+                            warningAnim.running = true
+                        }
+                        console.log(passField.text)
                     }
                 }
             }
